@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Government Banking Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #005cb9;
+      --secondary-color: #124c7c;
+      --accent-color: #e6b618;
+      --light-bg: #f5f7fa;
+      --border-color: #d1d5db;
+      --success: #1e7e34;
+      --danger: #dc3545;
+      --info: #17a2b8;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-bg);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .top-stripe {
+      height: 8px;
+      background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+    }
+    
+    .header {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-emblem {
+      width: 60px;
+      height: 60px;
+      margin-right: 15px;
+    }
+    
+    .logo-text h1 {
+      font-size: 24px;
+      color: var(--secondary-color);
+      margin: 0;
+    }
+    
+    .logo-text p {
+      font-size: 14px;
+      color: #666;
+      margin: 5px 0 0;
+    }
+    
+    .nav-links {
+      display: flex;
+    }
+    
+    .nav-links a {
+      color: var(--secondary-color);
+      text-decoration: none;
+      padding: 10px 15px;
+      margin-left: 5px;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      background-color: rgba(0, 92, 185, 0.1);
+    }
+
+    /* Main Content Styles */
+    .main-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .action-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .action-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .action-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: white;
+    }
+
+    .action-card h3 {
+      color: var(--secondary-color);
+      margin-bottom: 15px;
+      font-size: 22px;
+    }
+
+    .action-card p {
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 15px;
+    }
+
+    .action-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 2px solid var(--primary-color);
+    }
+
+    .action-btn:hover {
+      background-color: white;
+      color: var(--primary-color);
+    }
+
+    /* Different card colors */
+    .card-1 .action-icon { background: linear-gradient(135deg, #FF9933, #e67e22); }
+    .card-2 .action-icon { background: linear-gradient(135deg, #138808, #27ae60); }
+    .card-3 .action-icon { background: linear-gradient(135deg, #005cb9, #3498db); }
+    .card-4 .action-icon { background: linear-gradient(135deg, #124c7c, #2c3e50); }
+
+    .welcome-message {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .welcome-message h2 {
+      color: var(--secondary-color);
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .welcome-message p {
+      color: #666;
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Aadhaar Info Modal */
+    .Aadhaar-info-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .Aadhaar-modal-content {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .close-modal:hover {
+      color: var(--danger);
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 40px 0 20px;
+      margin-top: 50px;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    
+    .footer-section h4 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-section h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #ddd;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .helpline {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .helpline i {
+      margin-right: 10px;
+      font-size: 18px;
+      color: var(--accent-color);
+    }
+    
+    .copyright {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      font-size: 14px;
+      color: #bbb;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 1200px) {
+      .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .action-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-content {
+        flex-direction: column;
+      }
+      
+      .nav-links {
+        margin-top: 15px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-stripe"></div>
+  
+  <header class="header">
+    <div class="header-content">
+        <div class="logo">
+            <img src="#" alt="Government Emblem" class="logo-emblem" id="govtLogo">
+            <div class="logo-text">
+              <h1>Digital Citizen Portal</h1>
+              <p>Ministry of Digital Governance</p>
+            </div>
+          </div>
+          
+      
+      <nav class="nav-links">
+        <a href="#"><i class="fas fa-home"></i> Home</a>
+        <a href="#" id="AadhaarInfoBtn"><i class="fas fa-id-card"></i> Aadhaar</a>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="main-container">
+    <div class="welcome-message">
+      <h2>Digital Banking & Aadhaar Services</h2>
+      <p>Access government banking services and Aadhaar facilities through our integrated platform</p>
+    </div>
+
+    <div class="action-grid">
+      <div class="action-card card-1">
+        <div class="action-icon">
+          <i class="fas fa-id-card"></i>
+        </div>
+        <h3>Aadhaar Card Registration</h3>
+        <p>Register for your Aadhaar card to access government banking services and subsidies</p>
+        <a href="adlogin2.html" class="action-btn">Register Now</a>
+      </div>
+
+      <div class="action-card card-2">
+        <div class="action-icon">
+          <i class="fas fa-user-check"></i>
+        </div>
+        <h3>Aadhaar View (For Users)</h3>
+        <p>View and manage your Aadhaar card details and associated services</p>
+        <a href="login2.html" class="action-btn">View Details</a>
+      </div>
+
+      <div class="action-card card-3">
+        <div class="action-icon">
+          <i class="fas fa-university"></i>
+        </div>
+        <h3>Bank Officials Portal</h3>
+        <p>Access the banking portal for officials to verify and process applications</p>
+        <a href="adlogin.html" class="action-btn">Bank Login</a>
+      </div>
+
+      <div class="action-card card-4">
+        <div class="action-icon">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <h3>Registration for Officials</h3>
+        <p>Registration and login for government and bank officials</p>
+        <a href="user.html" class="action-btn">Official Register</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aadhaar Info Modal -->
+  <div class="Aadhaar-info-modal" id="AadhaarInfoModal">
+    <div class="Aadhaar-modal-content">
+      <span class="close-modal" id="closeAadhaarModal">&times;</span>
+      <h2 style="color: var(--secondary-color); margin-bottom: 20px;">Aadhaar Card Information</h2>
+      
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: var(--secondary-color); margin-bottom: 10px;">What is Aadhaar?</h3>
+        <p>Aadhaar is a 4-digit unique identity number issued by the Government of India to rural residents. It serves as proof of identity and address for accessing government services in rural areas.</p>
+      </div>
+      
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: var(--secondary-color); margin-bottom: 10px;">Benefits of Aadhaar</h3>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+          <li>Universal identity proof across rural India</li>
+          <li>Easy access to government welfare schemes</li>
+          <li>Simplified KYC process for banking and telecom services</li>
+          <li>Digital life certificate for pensioners</li>
+          <li>Direct Benefit Transfer (DBT) for various government schemes</li>
+        </ul>
+      </div>
+      
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: var(--secondary-color); margin-bottom: 10px;">Important Points</h3>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+          <li>Keep your demographic and biometric information updated</li>
+          <li>You can update your Aadhaar details online</li>
+          <li>Link your Aadhaar card with your bank account for direct benefit transfers and loans</li>
+          <li>Protect your Aadhaar number as you would protect any identity document</li>
+        </ul>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <p>For more information, visit the official website</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>About Digital Citizen Portal</h4>
+        <p style="color: #ddd; line-height: 1.6; margin-bottom: 20px;">
+          The official platform for citizen services and document management. Access government services easily and securely.
+        </p>
+        <div class="helpline">
+          <i class="fas fa-phone-alt"></i>
+          <div>
+            <div>Toll Free Helpline</div>
+            <div style="font-weight: 700;">1800-XXX-XXXX</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Documents</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Important Links</h4>
+        <ul class="footer-links">
+          <li><a href="#">Ministry Portal</a></li>
+          <li><a href="#">Government Services</a></li>
+          <li><a href="#">Public Grievances</a></li>
+          <li><a href="#">RTI</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Connect With Us</h4>
+        <ul class="footer-links">
+          <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      &copy; 2025 Ministry of Digital Governance. All Rights Reserved | Terms and Conditions | Privacy Policy | Disclaimer
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Aadhaar modal functionality
+      const AadhaarBtn = document.getElementById('AadhaarInfoBtn');
+      const AadhaarModal = document.getElementById('AadhaarInfoModal');
+      const closeAadhaarModal = document.getElementById('closeAadhaarModal');
+      document.getElementById('govtLogo').src = 'https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg';
+      AadhaarBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        AadhaarModal.style.display = 'flex';
+      });
+      
+      closeAadhaarModal.addEventListener('click', function() {
+        AadhaarModal.style.display = 'none';
+      });
+      
+      window.addEventListener('click', function(e) {
+        if (e.target === AadhaarModal) {
+          AadhaarModal.style.display = 'none';
+        }
+      });
+
+      // Action buttons functionality
+
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #1e293b;
+      --light: #f8fafc;
+    }
+    
+    * {
+      box-sizing: border-box;
+      transition: all 0.25s ease;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f6f7ff 0%, #e9f1ff 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      color: var(--dark);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .sidebar {
+      width: 300px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 1px solid rgba(99, 102, 241, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    
+    .sidebar h3 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 600;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+    
+    .sidebar h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 10px;
+    }
+    
+    #cardDisplay {
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      padding: 20px;
+      border-radius: 16px;
+      width: 100%;
+      margin-top: 20px;
+      box-sizing: border-box;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05),
+                 -5px -5px 15px rgba(255, 255, 255, 0.6);
+      text-align: center;
+      color: var(--dark);
+      border: 1px dashed rgba(99, 102, 241, 0.3);
+      position: relative;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #cardDisplay::before {
+      content: '💳';
+      font-size: 40px;
+      position: absolute;
+      top: 20px;
+      opacity: 0.1;
+    }
+    
+    .content {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      top: -75px;
+      right: -75px;
+      opacity: 0.1;
+    }
+    
+    .container::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, var(--warning), var(--danger));
+      border-radius: 50%;
+      bottom: -50px;
+      left: -50px;
+      opacity: 0.1;
+    }
+    
+    h2 {
+      text-align: center;
+      color: var(--dark);
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    
+    .progress {
+      height: 100%;
+      width: 25%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 4px;
+      transition: width 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(100%);
+      }
+    }
+    
+    .form-group {
+      margin-bottom: 24px;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 15px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-group label::before {
+      content: '•';
+      color: var(--primary);
+      margin-right: 8px;
+      font-size: 20px;
+      line-height: 0;
+    }
+    
+    input[type="text"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="email"] {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      background: #fff;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+    
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    input[type="date"]:focus,
+    input[type="email"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    input[type="file"] {
+      width: 100%;
+      padding: 0;
+      margin-top: 5px;
+      border: none;
+      font-size: 15px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      position: relative;
+    }
+    
+    .file-upload {
+      width: 100%;
+      position: relative;
+      padding: 20px;
+      border: 2px dashed #e2e8f0;
+      border-radius: 12px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    
+    .file-upload:hover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.05);
+    }
+    
+    .file-upload i {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: block;
+    }
+    
+    .file-upload input[type="file"] {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .file-upload-text {
+      font-size: 14px;
+      color: #64748b;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      margin-top: 10px;
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+      z-index: 1;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.6s;
+      z-index: -1;
+    }
+    
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(79, 70, 229, 0.4);
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+    }
+    
+    p {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 25px;
+      color: #64748b;
+    }
+    
+    p a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+    }
+    
+    p a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width 0.3s ease;
+    }
+    
+    p a:hover::after {
+      width: 100%;
+    }
+    
+    .input-icon {
+      position: relative;
+    }
+    
+    .file-group {
+      position: relative;
+    }
+    
+    .file-icon {
+      display: block;
+      font-size: 30px;
+      color: #cbd5e1;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    .icon-circle {
+      width: 40px;
+      height: 40px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      color: var(--primary);
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+    
+    .floating-emoji {
+      position: absolute;
+      opacity: 0.4;
+      animation: float 5s ease-in-out infinite;
+      font-size: 24px;
+      pointer-events: none;
+    }
+    
+    .emoji-1 {
+      top: 20px;
+      right: 20px;
+      animation-delay: 0s;
+    }
+    
+    .emoji-2 {
+      bottom: 50px;
+      left: 20px;
+      animation-delay: 1s;
+    }
+    
+    .emoji-3 {
+      bottom: 100px;
+      right: 50px;
+      animation-delay: 2s;
+    }
+    
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: all 0.2s;
+    }
+    
+    input[type="date"]::-webkit-calendar-picker-indicator:hover {
+      opacity: 1;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+        height: auto;
+      }
+      
+      .sidebar {
+        width: 100%;
+        box-sizing: border-box;
+        border-right: none;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        padding: 20px;
+      }
+      
+      .content {
+        padding: 20px;
+      }
+      
+      .container {
+        padding: 25px;
+      }
+    }
+
+    /* Land Marking Section Styles */
+    #mapContainer {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+      border: 2px solid #e2e8f0;
+    }
+
+    #landInputMethod {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      background: #fff;
+      transition: all 0.3s;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    #landInputMethod:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    #dimensionInputs {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #e2e8f0;
+    }
+
+    #dimensionInputs input[type="number"] {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      background: #fff;
+      transition: all 0.3s;
+      margin-bottom: 10px;
+    }
+
+    #dimensionInputs input[type="number"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    #dimensionInputs button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    #dimensionInputs button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    #photoUploadSection {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #e2e8f0;
+    }
+
+    #photoUploadSection h4 {
+      color: var(--dark);
+      margin-bottom: 15px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    #photoInstruction {
+      color: #64748b;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    #photoInputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    /* Add these styles in the existing <style> section */
+    .file-indicator {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-indicator::before {
+      content: '📄';
+      font-size: 16px;
+    }
+
+    .file-upload {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .file-upload:hover .file-indicator {
+      background: rgba(99, 102, 241, 0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h3>Card Info</h3>
+    <div id="cardDisplay">Card number will appear here after registration.</div>
+  </div>
+  
+  <div class="content">
+    <div class="container">
+      <span class="floating-emoji emoji-1">📝</span>
+      <span class="floating-emoji emoji-2">🏠</span>
+      <span class="floating-emoji emoji-3">💰</span>
+      
+      <h2>New User Registration</h2>
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+      
+      <form id="registrationForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="fullName">Full Name:</label>
+          <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" name="dob" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="mobile">Mobile Number:</label>
+          <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="Enter your email address" 
+            required
+          />
+        </div>
+        
+        
+        <div class="form-group">
+          <label for="photo">Photo:</label>
+          <div class="file-upload">
+            <div class="icon-circle">📷</div>
+            <span class="file-upload-text">Click to upload your photo</span>
+            <input type="file" id="photo" name="photo" accept="image/*" required />
+          </div>
+        </div>
+        
+        
+        <!-- Land Document -->
+        <div class="form-group">
+          <label for="landDocument">Land Document:</label>
+          <div class="file-upload">
+            <div class="icon-circle">📜</div>
+            <span class="file-upload-text">Click to upload Land Document</span>
+            <input type="file" id="landDocument" name="landDocument" accept="image/*" required />
+           </div>
+        </div>
+        
+        <!-- Voter ID -->
+        <div class="form-group">
+          <label for="voterID">Voter ID:</label>
+          <div class="file-upload">
+            <div class="icon-circle">🗳️</div>
+            <span class="file-upload-text">Click to upload Voter ID</span>
+            <input type="file" id="voterID" name="voterID" accept="image/*" required />
+          </div>
+        </div>
+        
+        <!-- Income Certificate -->
+        <div class="form-group">
+          <label for="incomeCertificate">Income Certificate:</label>
+          <div class="file-upload">
+            <div class="icon-circle">💵</div>
+            <span class="file-upload-text">Click to upload Income Certificate</span>
+            <input type="file" id="incomeCertificate" name="incomeCertificate" accept="image/*" required />
+           </div>
+        </div>
+        
+        <!-- Driving License -->
+        <div class="form-group">
+          <label for="drivingLicense">Driving License:</label>
+          <div class="file-upload">
+            <div class="icon-circle">🚗</div>
+            <span class="file-upload-text">Click to upload Driving License</span>
+            <input type="file" id="drivingLicense" name="drivingLicense" accept="image/*" required />
+           </div>
+        </div>
+        
+        <!-- Bank Passbook -->
+        <div class="form-group">
+          <label for="bankPassbook">Bank Passbook:</label>
+          <div class="file-upload">
+            <div class="icon-circle">🏦</div>
+            <span class="file-upload-text">Click to upload Bank Passbook</span>
+            <input type="file" id="bankPassbook" name="bankPassbook" accept="image/*" required />
+           </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="bankAccount">Bank Account Number:</label>
+          <input type="text" id="bankAccount" name="bankAccount" placeholder="Enter your bank account number" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="ifsc">IFSC Code:</label>
+          <input type="text" id="ifsc" name="ifsc" placeholder="Enter IFSC code" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="nomineeName">Nominee Name:</label>
+          <input type="text" id="nomineeName" name="nomineeName" placeholder="Enter nominee's name" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="nomineeRelation">Nominee Relationship:</label>
+          <input type="text" id="nomineeRelation" name="nomineeRelation" placeholder="Enter your relationship with nominee" required />
+        </div>
+
+        <!-- Live Map Section -->
+<h3>Mark Your Land</h3>
+<div id="mapContainer" style="width: 100%; height: 400px;"></div>
+<br>
+<label>
+  Land Input Method:
+  <select id="landInputMethod">
+    <option value="draw">Draw on Map</option>
+    <option value="rectangle">Auto-Generate Rectangle</option>
+  </select>
+</label><br><br>
+
+<div id="dimensionInputs" style="display: none;">
+  <input type="number" id="length" placeholder="Length (in meters)" />
+  <input type="number" id="breadth" placeholder="Breadth (in meters)" />
+  <button type="button" onclick="generateRectangle()">Generate Land</button>
+</div>
+
+<input type="hidden" name="landData" id="landData" />
+<div id="photoUploadSection" style="display:none;">
+  <h4>Upload Photos</h4>
+  <p id="photoInstruction"></p>
+  <div id="photoInputs"></div>
+</div>
+
+<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+<link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+
+        
+        <button type="submit" class="btn">Submit for Verification</button>
+      </form>
+      </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>

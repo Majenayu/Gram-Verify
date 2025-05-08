@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .progress-container {
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      background: #ddd;
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 10px;
+      width: 0;
+      background: #28a745;
+    }
+    .verification-step {
+      display: none;
+    }
+    .verification-step.active {
+      display: block;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    .verification-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5px;
+    }
+    .status-indicator {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: gray;
+      color: white;
+      text-align: center;
+      line-height: 20px;
+    }
+    .status-indicator.verified {
+      background: green;
+    }
+    .status-indicator.failed {
+      background: red;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+    }
+    .button {
+      margin-top: 10px;
+      padding: 10px;
+      background: #007bff;
+      border: none;
+      color: white;
+      width: 100%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <div class="progress-container">
+      <div>Verification Progress: <span id="progressPercentage">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <form id="loginForm">
+      <div class="verification-step active" id="step-cardNo">
+        <label>Card Number</label>
+        <input type="text" id="cardNo" required />
+        <div class="error-message" id="cardNo-error"></div>
+        <div class="verification-status">
+          <span class="status-indicator pending" id="cardNo-indicator">1</span>
+          <span id="cardNo-status">Pending</span>
+        </div>
+        <button type="button" class="button" id="verify-cardNo">Verify</button>
+      </div>
+
+      <div class="verification-step" id="step-phone">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" required />
+        <div class="error-message" id="phone-error"></div>
+        <div class="verification-status">
+          <span class="status-indicator pending" id="phone-indicator">2</span>
+          <span id="phone-status">Pending</span>
+        </div>
+        <button type="button" class="button" id="verify-phone">Verify</button>
+      </div>
+
+      <div class="verification-step" id="step-dob">
+        <label>Date of Birth</label>
+        <input type="date" id="dob" required />
+        <div class="error-message" id="dob-error"></div>
+        <div class="verification-status">
+          <span class="status-indicator pending" id="dob-indicator">3</span>
+          <span id="dob-status">Pending</span>
+        </div>
+        <button type="button" class="button" id="verify-dob">Verify</button>
+      </div>
+
+      <div class="verification-step" id="step-final">
+        <div id="finalMessage"></div>
+        <button type="button" class="button" id="loginButton" disabled>Login</button>
+      </div>
+    </form>
+  </div>
+  <script src="/script3.js"></script>
+</body>
+</html>

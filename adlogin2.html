@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f7fa;
+      padding: 20px;
+    }
+    
+    .login-container {
+      width: 100%;
+      max-width: 450px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      position: relative;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    
+    .progress-container {
+      margin-bottom: 25px;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: #4CAF50;
+      transition: width 0.3s ease;
+    }
+    
+    .progress-label {
+      font-size: 14px;
+      color: #666;
+      text-align: right;
+    }
+    
+    .verification-step {
+      display: none;
+      margin-bottom: 20px;
+    }
+    
+    .verification-step.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+    
+    input.error {
+      border-color: #ff3860;
+    }
+    
+    input.success {
+      border-color: #4CAF50;
+    }
+    
+    .error-message {
+      color: #ff3860;
+      font-size: 14px;
+      margin-top: 5px;
+      min-height: 20px;
+    }
+    
+    .button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .button:hover {
+      background-color: #3e8e41;
+    }
+    
+    .button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    
+    .verification-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 5px;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 10px;
+      text-align: center;
+      line-height: 20px;
+      color: white;
+      font-size: 12px;
+    }
+    
+    .pending {
+      background-color: #f1f1f1;
+    }
+    
+    .verified {
+      background-color: #4CAF50;
+    }
+    
+    .failed {
+      background-color: #ff3860;
+    }
+    
+    .status-text {
+      font-size: 14px;
+    }
+    
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+      text-decoration: none;
+    }
+    
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    
+    #finalMessage {
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+      color: #333;
+      min-height: 60px;
+    }
+    
+    .success-message {
+      color: #4CAF50;
+    }
+    
+    .error-final-message {
+      color: #ff3860;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Admin Login</h1>
+    
+    <div class="progress-container">
+      <div class="progress-label">Verification Progress: <span id="progressPercentage">0%</span></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+    
+    <form id="adminLoginForm">
+      <!-- Step 1: Email (now first) -->
+      <div class="verification-step active" id="step-email">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <div class="error-message" id="email-error"></div>
+        <div class="verification-status">
+          <div>
+            <span class="status-indicator pending" id="email-indicator">1</span>
+            <span class="status-text" id="email-status">Pending verification</span>
+          </div>
+          <button type="button" class="button" id="verify-email">Verify</button>
+        </div>
+      </div>
+      
+      <!-- Step 2: Name -->
+      <div class="verification-step" id="step-name">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        <div class="error-message" id="name-error"></div>
+        <div class="verification-status">
+          <div>
+            <span class="status-indicator pending" id="name-indicator">2</span>
+            <span class="status-text" id="name-status">Pending verification</span>
+          </div>
+          <button type="button" class="button" id="verify-name">Verify</button>
+        </div>
+      </div>
+      
+      <!-- Step 3: Phone -->
+      <div class="verification-step" id="step-phone">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+        <div class="error-message" id="phone-error"></div>
+        <div class="verification-status">
+          <div>
+            <span class="status-indicator pending" id="phone-indicator">3</span>
+            <span class="status-text" id="phone-status">Pending verification</span>
+          </div>
+          <button type="button" class="button" id="verify-phone">Verify</button>
+        </div>
+      </div>
+      
+      <!-- Step 4: Password -->
+      <div class="verification-step" id="step-password">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <div class="error-message" id="password-error"></div>
+        <div class="verification-status">
+          <div>
+            <span class="status-indicator pending" id="password-indicator">4</span>
+            <span class="status-text" id="password-status">Pending verification</span>
+          </div>
+          <button type="button" class="button" id="verify-password">Verify</button>
+        </div>
+      </div>
+      
+      <!-- Step 5: Admin ID -->
+      <div class="verification-step" id="step-adminId">
+        <label for="adminId">Admin ID</label>
+        <input type="text" id="adminId" name="adminId" placeholder="Enter your admin ID" required>
+        <div class="error-message" id="adminId-error"></div>
+        <div class="verification-status">
+          <div>
+            <span class="status-indicator pending" id="adminId-indicator">5</span>
+            <span class="status-text" id="adminId-status">Pending verification</span>
+          </div>
+          <button type="button" class="button" id="verify-adminId">Verify</button>
+        </div>
+      </div>
+      
+      <!-- Final step -->
+      <div class="verification-step" id="step-final">
+        <div id="finalMessage"></div>
+        <button type="button" class="button" id="loginButton" disabled>Login</button>
+      </div>
+    </form>
+    
+    <a href="/" class="back-link">Back to Home</a>
+  </div>
+
+  <script src="/adlogin2.js"></script>
+</body>
+</html>

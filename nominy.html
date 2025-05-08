@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Account Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #005cb9;
+      --secondary-color: #124c7c;
+      --accent-color: #e6b618;
+      --light-bg: #f5f7fa;
+      --border-color: #d1d5db;
+      --success: #1e7e34;
+      --danger: #dc3545;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-bg);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .top-stripe {
+      height: 8px;
+      background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+    }
+    
+    .header {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-emblem {
+      width: 60px;
+      height: 60px;
+      margin-right: 15px;
+    }
+    
+    .logo-text h1 {
+      font-size: 24px;
+      color: var(--secondary-color);
+      margin: 0;
+    }
+    
+    .logo-text p {
+      font-size: 14px;
+      color: #666;
+      margin: 5px 0 0;
+    }
+    
+    .nav-links {
+      display: flex;
+    }
+    
+    .nav-links a {
+      color: var(--secondary-color);
+      text-decoration: none;
+      padding: 10px 15px;
+      margin-left: 5px;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      background-color: rgba(0, 92, 185, 0.1);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    
+    .page-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .page-title h2 {
+      color: var(--secondary-color);
+      font-size: 28px;
+    }
+    
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .breadcrumb i {
+      margin: 0 8px;
+      font-size: 12px;
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 30px;
+    }
+    
+    .profile-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      padding: 30px 20px;
+      text-align: center;
+    }
+    
+    .profile-photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      border: 5px solid #fff;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+      background-color: #eee;
+    }
+    
+    .profile-info h3 {
+      font-size: 20px;
+      color: var(--secondary-color);
+      margin-bottom: 5px;
+    }
+    
+    .profile-info .card-number {
+      display: inline-block;
+      padding: 6px 12px;
+      background-color: var(--secondary-color);
+      color: white;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    
+    .card-badge {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 15px 0;
+    }
+    
+    .card-badge .verified {
+      display: flex;
+      align-items: center;
+      background-color: rgba(30, 126, 52, 0.1);
+      color: var(--success);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .card-badge i {
+      margin-right: 5px;
+    }
+    
+    .main-content {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      padding: 30px;
+    }
+    
+    .nominators-section {
+      background: linear-gradient(135deg, #ffffff, #f8f9ff);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .nominators-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .nominators-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .nominators-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      font-size: 24px;
+    }
+
+    .nominators-title h3 {
+      margin: 0;
+      color: var(--secondary-color);
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .nominators-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .nominator-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .nominator-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .nominator-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .nominator-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--light-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      font-size: 20px;
+      border: 2px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .nominator-details h4 {
+      margin: 0;
+      color: var(--secondary-color);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .nominator-details p {
+      margin: 5px 0 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .view-nominators-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .view-nominators-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--light-bg);
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    .empty-state i {
+      font-size: 48px;
+      color: #666;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+
+    .empty-state p {
+      margin: 0;
+      color: #666;
+      font-size: 16px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border: none;
+      text-align: center;
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .close-modal:hover {
+      color: var(--danger);
+    }
+
+    .success-alert {
+      padding: 15px;
+      margin: 20px 0;
+      background-color: rgba(30, 126, 52, 0.1);
+      border-left: 4px solid var(--success);
+      color: var(--success);
+      display: none;
+    }
+
+    @media (max-width: 992px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+      }
+      
+      .nav-links {
+        margin-top: 15px;
+      }
+      
+      .profile-photo {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .section-header h3 {
+      color: var(--secondary-color);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-header h3 i {
+      color: var(--primary-color);
+    }
+    
+    .section-content {
+      padding: 20px;
+      background-color: var(--light-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .section-content .btn {
+      width: auto;
+      min-width: 150px;
+    }
+
+    .logout-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: linear-gradient(135deg, #fff, #f8f9ff);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .logout-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--secondary-color);
+      font-size: 14px;
+    }
+
+    .logout-info i {
+      color: var(--primary-color);
+      font-size: 18px;
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-size: 15px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+    }
+
+    .logout-btn i {
+      font-size: 16px;
+    }
+
+    .footer {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 40px 0 20px;
+      margin-top: 50px;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    
+    .footer-section h4 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-section h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #ddd;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .helpline {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .helpline i {
+      margin-right: 10px;
+      font-size: 18px;
+      color: var(--accent-color);
+    }
+    
+    .copyright {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      font-size: 14px;
+      color: #bbb;
+      margin-top: 20px;
+    }
+    
+    @media (max-width: 992px) {
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-stripe"></div>
+  
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <img src="#" alt="Government Emblem" class="logo-emblem" id="govtLogo">
+        <div class="logo-text">
+          <h1>Banking Services Portal</h1>
+          <p>Ministry of Digital Governance</p>
+        </div>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="/dashboard"><i class="fas fa-home"></i> Main Dashboard</a>
+        <a href="#" id="helpBtn"><i class="fas fa-question-circle"></i> Help</a>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="container">
+    <div class="page-title">
+      <h2>Bank Account Dashboard</h2>
+      <div class="breadcrumb">
+        <span>Home</span>
+        <i class="fas fa-chevron-right"></i>
+        <span>Banking</span>
+      </div>
+    </div>
+    
+    <div class="dashboard-grid">
+      <div class="profile-card">
+        <img id="userPhoto" src="" alt="User Photo" class="profile-photo"> 
+        <div class="profile-info">
+          <h3 id="displayFullName">Loading...</h3>
+          <div class="card-number" id="cardNo">Loading...</div>
+        </div>
+        
+        <div class="card-badge">
+          <div class="verified">
+            <i class="fas fa-check-circle"></i> Verified Account
+          </div>
+        </div>
+      </div>
+      
+      <div class="main-content">
+        <div id="successAlert" class="success-alert">
+          <i class="fas fa-check-circle"></i> Bank details updated successfully!
+        </div>
+        
+        <div class="section-header">
+          <h3><i class="fas fa-users"></i> Nominee Info</h3>
+        </div>
+
+        <div class="nominators-section">
+          <div class="nominators-header">
+            <div class="nominators-title">
+              <div class="nominators-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <h3>People Who Have Nominated You</h3>
+            </div>
+            <button class="view-nominators-btn" id="viewNomineesBtn">
+              <i class="fas fa-eye"></i>
+              View Details
+            </button>
+          </div>
+          
+          <div id="nominatorsList">
+            <div class="nominators-grid">
+              <!-- Nominators will be dynamically added here -->
+            </div>
+          </div>
+        </div>
+
+        <div class="section-content">
+          <div class="logout-container">
+            <button class="btn btn-danger logout-btn" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Nominees Modal -->
+  <div class="modal" id="nomineesModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeNomineesModal">&times;</span>
+      <h2 style="color: var(--secondary-color); margin-bottom: 20px;">People Who Have Nominated You</h2>
+      
+      <div id="nomineesModalContent" style="max-height: 300px; overflow-y: auto;">
+        <p>Loading nominator information...</p>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="btn btn-primary" id="closeNomineesModalBtn">Close</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Help Modal -->
+  <div class="modal" id="helpModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeHelpModal">&times;</span>
+      <h2 style="color: var(--secondary-color); margin-bottom: 20px;">Banking Help Information</h2>
+      
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: var(--secondary-color); margin-bottom: 10px;">How to Update Bank Details</h3>
+        <ol style="padding-left: 20px; line-height: 1.8;">
+          <li>Click on "Update Bank Details" button on the left panel</li>
+          <li>Enter your new bank account number</li>
+          <li>Enter the IFSC code of your bank branch</li>
+          <li>Click on "Save Changes" to update your information</li>
+        </ol>
+      </div>
+      
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: var(--secondary-color); margin-bottom: 10px;">Important Notes</h3>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+          <li>Ensure the bank account is in your name</li>
+          <li>Verify the IFSC code is correct to avoid transaction failures</li>
+          <li>Changes may take up to 24 hours to reflect across all government systems</li>
+          <li>Keep your nominee information up to date</li>
+        </ul>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <p>For any issues, please contact our helpline: 1800-XXX-XXXX</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>About Banking Services Portal</h4>
+        <p style="color: #ddd; line-height: 1.6; margin-bottom: 20px;">
+          The official platform for managing your linked bank accounts for government services and direct benefit transfers.
+        </p>
+        <div class="helpline">
+          <i class="fas fa-phone-alt"></i>
+          <div>
+            <div>Toll Free Helpline</div>
+            <div style="font-weight: 700;">1800-XXX-XXXX</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/dashboard">Main Dashboard</a></li>
+          <li><a href="#">Banking Services</a></li>
+          <li><a href="#">Account Security</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Important Links</h4>
+        <ul class="footer-links">
+          <li><a href="#">RBI Guidelines</a></li>
+          <li><a href="#">NPCI Services</a></li>
+          <li><a href="#">Direct Benefit Transfer</a></li>
+          <li><a href="#">Banking Support</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Connect With Us</h4>
+        <ul class="footer-links">
+          <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      &copy; 2025 Ministry of Digital Governance. All Rights Reserved | Terms and Conditions | Privacy Policy | Disclaimer
+    </div>
+  </footer>
+
+  <script>
+    // Function to check if user is logged in
+    function checkUserLogin() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let cardNo = urlParams.get('cardNo') || localStorage.getItem('cardNo');
+  
+      if (!cardNo) {
+        window.location.href = 'login.html';
+      } else {
+        // Save to localStorage so it persists across reloads
+        localStorage.setItem('cardNo', cardNo);
+        fetchUserInfo(cardNo);
+      }
+    }
+  
+    // Fetch user data from backend
+    async function fetchUserInfo(cardNo) {
+      try {
+        const response = await fetch(`/api/userinfo?cardNo=${cardNo}`);
+        const data = await response.json();
+  
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
+  
+        // Set Govt emblem and profile photo
+        document.getElementById('govtLogo').src = 'https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg';
+        document.getElementById('userPhoto').src = data.photo && data.photo.trim() !== ''
+          ? data.photo
+          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+  
+        // Display user info
+        document.getElementById('displayFullName').textContent = data.fullName || 'Not Available';
+        document.getElementById('cardNo').textContent = `Card No: ${data.cardNo}`;
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    }
+    
+    // Function to fetch and display nominators
+    async function fetchNominators() {
+      const cardNo = localStorage.getItem('cardNo');
+      
+      if (!cardNo) {
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/api/nominees?cardNo=${cardNo}`);
+        const data = await response.json();
+        
+        const nominatorsListElement = document.getElementById('nominatorsList');
+        const nomineesModalContent = document.getElementById('nomineesModalContent');
+        
+        if (data.success && data.nominators && data.nominators.length > 0) {
+          let nominatorsHTML = '<div class="nominators-grid">';
+          
+          data.nominators.forEach(nominator => {
+            nominatorsHTML += `
+              <div class="nominator-card">
+                <div class="nominator-info">
+                  <div class="nominator-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="nominator-details">
+                    <h4>${nominator.fullName}</h4>
+                    <p>Card No: ${nominator.cardNo}</p>
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+          
+          nominatorsHTML += '</div>';
+          nominatorsListElement.innerHTML = nominatorsHTML;
+          nomineesModalContent.innerHTML = nominatorsHTML;
+        } else {
+          nominatorsListElement.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-users"></i>
+              <p>No one has nominated you yet.</p>
+            </div>
+          `;
+          nomineesModalContent.innerHTML = nominatorsListElement.innerHTML;
+        }
+      } catch (error) {
+        console.error('Error fetching nominators:', error);
+      }
+    }
+
+    // Logout
+    function logout() {
+      if (confirm("Are you sure you want to logout?")) {
+        localStorage.removeItem('cardNo');
+        window.location.href = '/login';
+      }
+    }
+  
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // View nominees button
+      const viewNomineesBtn = document.getElementById('viewNomineesBtn');
+      if (viewNomineesBtn) {
+        viewNomineesBtn.addEventListener('click', function() {
+          fetchNominators();
+          document.getElementById('nomineesModal').style.display = 'flex';
+        });
+      }
+      
+      // Close nominees modal
+      const closeNomineesModal = document.getElementById('closeNomineesModal');
+      if (closeNomineesModal) {
+        closeNomineesModal.addEventListener('click', function() {
+          document.getElementById('nomineesModal').style.display = 'none';
+        });
+      }
+      
+      // Close nominees modal button
+      const closeNomineesModalBtn = document.getElementById('closeNomineesModalBtn');
+      if (closeNomineesModalBtn) {
+        closeNomineesModalBtn.addEventListener('click', function() {
+          document.getElementById('nomineesModal').style.display = 'none';
+        });
+      }
+      
+      // Help modal
+      const helpBtn = document.getElementById('helpBtn');
+      const helpModal = document.getElementById('helpModal');
+      const closeHelpModal = document.getElementById('closeHelpModal');
+    
+      helpBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        helpModal.style.display = 'flex';
+      });
+    
+      closeHelpModal?.addEventListener('click', () => {
+        helpModal.style.display = 'none';
+      });
+    
+      window.addEventListener('click', (e) => {
+        if (e.target === helpModal) {
+          helpModal.style.display = 'none';
+        }
+      });
+      
+      // Call fetchNominators when the page loads
+      fetchNominators();
+      
+      // Start app
+      checkUserLogin();
+    });
+  </script>
+</body>
+</html>
