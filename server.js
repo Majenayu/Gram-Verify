@@ -216,7 +216,7 @@ const mailOptions = {
   from: 'pgayushrai@gmail.com',
   to: data.email,
   subject: 'Welcome to Divizira!',
-  text: `Hi, I am Ayush. Thank you for registering. Your card number is ${cardNo}.`
+  text: `Hi,Congratulations on the successful creation/update of your Aadhaar card Your card number is ${cardNo}.Kindly proceed to pay the registration charges of Rs. 100.`
 };
 
 transporter.sendMail(mailOptions, (error, info) => {
