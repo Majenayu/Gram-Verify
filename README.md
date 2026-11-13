@@ -1,57 +1,68 @@
 # Gram-Verify
 
-A Node.js/Express verification portal with separate user, administrator, bank, document, dashboard, and face-verification pages. It uses MongoDB/Mongoose, Multer uploads, Cloudinary media, email, and Twilio integrations.
+Gram-Verify is a Node.js/Express portal prototype for rural identity and banking workflows. It combines registration and login, document/photo uploads, user and bank dashboards, nominee verification, administrator flows, and notification integrations.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-  Portal[HTML/JS portals] --> Express[server.js]
-  Express --> Auth[login/register and role flows]
-  Express --> Mongo[(MongoDB/Mongoose)]
-  Express --> Upload[Multer]
-  Upload --> Cloudinary[Cloudinary]
-  Express --> Notify[Nodemailer / Twilio]
-  Express --> Face[face*.html and client scripts]
+  Pages[HTML/JS portals] --> Express[server.js]
+  Express --> Mongo[(MongoDB / Mongoose)]
+  Express --> Upload[Multer temporary uploads]
+  Upload --> Cloudinary[Cloudinary media]
+  Express --> Notify[Nodemailer + Twilio]
+  Express --> Verify[Card / phone / DOB / nominee checks]
 ```
 
-`server.js` is the backend entrypoint. The many HTML/JS pages represent user and administrator workflows; `script*.js`, `dashboard*.js`, and `face*.js` contain browser behavior.
+`server.js` is the backend entrypoint and currently contains the route wiring, persistence models, upload handling, provider configuration, and verification flows. The many HTML pages represent separate user, bank, administrator, nominee, and face/document screens.
 
-## Setup
+## Main workflows and routes
+
+- Public pages: `/`, `/login`, and `/register`
+- Account creation: `POST /register` with profile and document fields
+- Authentication: `POST /login`
+- User views: `/dashboard`, `/banking`, `/api/userinfo`, and `/api/bankinfo`
+- Bank updates: `POST /api/updatebank` and `POST /api/updatebankandnominee`
+- Administrator flow: `/admin/login`, `/admin/dashboard`
+- Verification steps: `/login/verify/cardNo`, `/login/verify/phone`, `/login/verify/dob`, and `/api/verify-nominee`
+- Nominee data: `GET /api/nominees`
+
+These endpoints reflect the current prototype implementation and are not a stable public API. Review validation, session behavior, and authorization in `server.js` before exposing them.
+
+## Local setup
+
+Requirements: Node.js/npm, MongoDB, and provider accounts/configuration for Cloudinary, email, and SMS where those features are enabled.
 
 ```bash
 npm ci
-# configure MongoDB, Cloudinary, mail, Twilio, and application secrets locally
 npm start
 ```
 
-The service expects Node.js with the dependencies in `package.json`; keep all provider credentials in environment variables.
+Configure MongoDB, mail, Twilio, Cloudinary, session, and application secrets using the deployment secret manager. Keep provider credentials out of source control and browser-delivered files. The application writes temporary upload files under `uploads/`; use a managed temporary volume and cleanup policy in deployment.
 
-## Workflow and data
+## Project layout
 
-Users register/login, submit identity or document data, and interact with verification dashboards. Express validates and persists records, Multer handles uploads, Cloudinary stores media, and notification providers deliver status messages. Review `server.js` for the current route contract before integrating clients.
+| Path | Responsibility |
+| --- | --- |
+| `server.js` | Express routes, models, verification, uploads, notifications |
+| `login.html` / `register.html` | Authentication and registration screens |
+| `dashboard1.html` / `banking.html` | User and banking views |
+| `admin*.html` | Administrative workflow screens |
+| `nominy.html` | Nominee workflow |
+| `face*.html` and `script*.js` | Client-side verification behavior |
+| `uploads/` | Local upload staging area; do not treat it as durable storage |
 
-## Deployment
+## Deployment and operations
 
-Run behind HTTPS with a managed MongoDB and private media configuration. Enforce role-based authorization server-side, use signed/expiring media URLs, and configure strict upload limits and retention/deletion policies.
+Run behind HTTPS with managed MongoDB and private media configuration. Enforce server-side role authorization for every administrator/bank route, use signed or expiring media URLs, restrict upload MIME types and sizes, delete temporary files after transfer, and define retention/deletion procedures for identity documents.
 
 ## Testing and limitations
 
-`npm test` is a placeholder. Add automated route and authorization tests before handling real identity documents; manually test failed uploads, duplicate accounts, privilege escalation attempts, provider outages, and face-verification edge cases.
+`npm test` is a placeholder and exits without running tests. Before handling real identity information, add route, authorization, upload, notification, and provider-failure tests. Manually test duplicate accounts, failed verification, malformed files, provider outages, session expiry, and privilege-escalation attempts. This prototype should not be treated as a production identity-verification or banking system without an independent security and compliance review.
 
-## Security and operations
+## Security
 
-- Keep credentials, database URLs, OAuth tokens, API keys, and signing secrets in environment variables; never commit them.
-- Validate and constrain uploaded files and user input at the server boundary, and enable HTTPS in production.
-- Review dependency updates and rotate any credential that has appeared in repository history.
-
-## Testing
-
-The repository currently has no comprehensive automated test suite unless noted above. Before production changes, add tests for authentication/authorization, validation failures, persistence errors, and the primary user workflow.
-
-## Limitations and roadmap
-
-This is an actively evolving project. Production hardening, observability, rate limiting, backup/retention policy, and accessibility/performance validation should be completed before handling sensitive or high-volume workloads.
+Identity documents, photos, phone numbers, and banking information are highly sensitive. Do not commit credentials, tokens, uploaded documents, or personal data. Rotate any credential exposed in repository history, minimize logs, and restrict database/media access.
 
 ## License
 
